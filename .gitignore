@@ -17,6 +17,8 @@ _dist
 _cache
 /_src/localStyles
 
+key.txt
+
 # misc
 .DS_Store
 .env.local
