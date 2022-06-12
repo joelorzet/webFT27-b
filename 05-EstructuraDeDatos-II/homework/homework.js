@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 /*
 Implementar la clase LinkedList, definiendo los siguientes métodos:
@@ -11,9 +11,76 @@ Implementar la clase LinkedList, definiendo los siguientes métodos:
   En caso de que la búsqueda no arroje resultados, search debe retornar null.
 */
 
-function LinkedList() {}
+class LinkedList {
+	constructor() {
+		(this.head = null), (this._length = 0);
+	}
 
-function Node(value) {}
+	add(value) {
+		let node = new Node(value);
+		let current = this.head;
+
+		if (!current) {
+			this.head = node;
+			this._length++;
+			return node;
+		}
+
+		while (current.next) {
+			current = current.next;
+		}
+
+		current.next = node;
+		this._length++;
+		return node;
+	}
+
+	remove() {
+		let current = this.head;
+
+		if (!current) {
+			return null;
+		}
+		if (this._length === 1) {
+			let nodeData = current.value;
+			this.head = null;
+			this._length--;
+			return nodeData;
+		}
+
+		while (current.next.next) {
+			current = current.next;
+		}
+
+		let nodeData = current.next.value;
+		current.next = null;
+		this._length--;
+		return nodeData;
+	}
+
+	search(item) {
+		let current = this.head;
+		const IsFUNCTION = typeof item;
+
+		while (current) {
+			if (IsFUNCTION === 'function') {
+				if (item(current.value)) return current.value;
+			}
+			if (item === current.value) {
+				return item;
+			}
+			current = current.next;
+		}
+
+		return null;
+	}
+}
+
+class Node {
+	constructor(value) {
+		(this.value = value), (this.next = null);
+	}
+}
 
 /*
 Implementar la clase HashTable.
@@ -30,13 +97,44 @@ La clase debe tener los siguientes métodos:
 Ejemplo: supongamos que quiero guardar {instructora: 'Ani'} en la tabla. Primero puedo chequear, con hasKey, si ya hay algo en la tabla con el nombre 'instructora'; luego, invocando set('instructora', 'Ani'), se almacenará el par clave-valor en un bucket específico (determinado al hashear la clave)
 */
 
-function HashTable() {}
+class HashTable {
+	constructor() {
+		(this.numBuckets = 35), (this.tabla = []);
+	}
+	hash(item) {
+		let contador = 0;
+
+		for (let i = 0; i < item.length; i++) {
+			contador += item[i].charCodeAt();
+		}
+
+		return contador % 35;
+	}
+	set(clave, valor) {
+		let index = this.hash(clave);
+
+		if (typeof clave !== 'string') throw new TypeError('Keys must be strings');
+		if (!this.tabla[index]) this.tabla[index] = {};
+		this.tabla[index][clave] = valor;
+	}
+	get(clave) {
+		let index = this.hash(clave);
+		return this.tabla[index][clave];
+	}
+	hasKey(clave) {
+		let index = this.hash(clave);
+
+		if (this.tabla[index][clave]) return true;
+
+		return false;
+	}
+}
 
 // No modifiquen nada debajo de esta linea
 // --------------------------------
 
 module.exports = {
-  Node,
-  LinkedList,
-  HashTable,
+	Node,
+	LinkedList,
+	HashTable,
 };
