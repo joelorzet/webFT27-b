@@ -124,9 +124,9 @@ class HashTable {
 	hasKey(clave) {
 		let index = this.hash(clave);
 
-		if (this.tabla[index][clave]) return true;
+		//if (this.tabla[index][clave]) return true;
 
-		return false;
+		return this.tabla[index].hasOwnProperty(clave);
 	}
 }
 
