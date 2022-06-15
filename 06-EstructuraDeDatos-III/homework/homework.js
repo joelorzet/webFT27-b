@@ -106,7 +106,7 @@ BinarySearchTree.prototype.breadthFirstForEach = function (cb, array = []) {
 
 	cb(this.value);
 
-	if (array.length > 0) {
+	while (array.length > 0) {
 		array.shift().breadthFirstForEach(cb, array);
 	}
 };
